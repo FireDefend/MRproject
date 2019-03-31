@@ -28,6 +28,20 @@ public class Move : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (start_move == true)
+        {
+            float vertical = Input.GetAxis("Vertical");
+            float horizontal = Input.GetAxis("Horizontal");
+            Vector3 dir = new Vector3(horizontal, 0, vertical);
+            if (dir != Vector3.zero)
+            {
+                transform.rotation = Quaternion.LookRotation(dir);
+                ani.SetInteger("walk", 2);
+                transform.Translate(dir * 0.3f * Time.deltaTime, Space.World);
+            }
+            if(dir == Vector3.zero&&signal==false) { ani.SetInteger("walk", 1); }
+        }
+
         if (last_hitpoint != GameManager.hitpoint&&start_move==true&& GameManager.selectedButton.transform.root.name != "GameManager")
         {
             last_hitpoint = GameManager.hitpoint;
@@ -42,18 +56,18 @@ public class Move : MonoBehaviour
 
         if (signal == true)
         {
-            transform.Translate(route * 0.5f * Time.deltaTime, Space.World);
+            transform.Translate(route * 0.3f * Time.deltaTime, Space.World);
             if ((last_hitpoint - transform.position).magnitude < 0.1)
             {
                 ani.SetInteger("walk", 1);
                 signal = false;
             }
         }
-        if (GameManager.selectedButton != null && GameManager.selectedButton.name == "model")
+        if (GameManager.selectedButton && GameManager.selectedButton.name == "model")
         {
             ani.SetInteger("walk", 1);
             GameManager.model_number++;
-            if (GameManager.model_number == 2) { GameManager.model_number = 0; }
+            if (GameManager.model_number == 4) { GameManager.model_number = 0; }
             creatmodel=Instantiate(GameManager.Instance.model[GameManager.model_number], Camera.main.transform.position + Camera.main.transform.forward, Quaternion.identity);
             creatmodel.transform.parent = GameManager.Instance.transform;
             look_rotation1 = -Camera.main.transform.forward;
@@ -65,12 +79,12 @@ public class Move : MonoBehaviour
             Destroy(this.gameObject);
         }
 
-        if (GameManager.selectedButton != null && GameManager.selectedButton.name == "dance1")
+        if (GameManager.selectedButton && GameManager.selectedButton.name == "dance1")
         {
             ani.SetInteger("walk", 3);
             GameManager.selectedButton = this.gameObject;
         }
-        if (GameManager.selectedButton != null && GameManager.selectedButton.name == "dance2")
+        if (GameManager.selectedButton && GameManager.selectedButton.name == "dance2")
         {
             ani.SetInteger("walk", 4);
             GameManager.selectedButton = this.gameObject;

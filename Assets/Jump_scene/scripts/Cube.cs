@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Cube : MonoBehaviour {
-    public static bool create_sym;
-    public static Vector3 place_cube;
-    public static Vector3 miku_dir;
+   // public static bool create_sym;
+   // public static Vector3 place_cube;
+   // public static Vector3 miku_dir;
+   // private Rigidbody miku_rigi;
 
     // Use this for initialization
     void Start () {
-     create_sym = false;
+    // create_sym = false;
 
 
 }
@@ -19,8 +20,10 @@ public class Cube : MonoBehaviour {
     {
 		 
     }
-    private void OnTriggerEnter(Collider other)
+    /*private void OnTriggerEnter(Collider other)
     {
+        miku_rigi =other.GetComponent<Rigidbody>();
+        miku_rigi.drag = 0;
         if (other.transform.position.y > this.transform.position.y)
         {
             miku_dir = new Vector3(this.transform.position.x + Random.Range(-0.3f, 0.3f), this.transform.position.y, this.transform.position.z + Random.Range(-0.3f, 0.3f));
@@ -29,7 +32,7 @@ public class Cube : MonoBehaviour {
                 miku_dir = new Vector3(this.transform.position.x + Random.Range(-0.3f, 0.3f), this.transform.position.y, this.transform.position.z + Random.Range(-0.3f, 0.3f));
             }
             place_cube.x = miku_dir.x;
-            place_cube.y = 5f;
+            place_cube.y = 0f;
             place_cube.z = miku_dir.z;
             miku_dir.y = this.transform.root.Find("Qmiku").transform.position.y;
             miku_dir = miku_dir - this.transform.root.Find("Qmiku").transform.position;
@@ -41,14 +44,17 @@ public class Cube : MonoBehaviour {
       
       
  
-    }
-    private void OnTriggerExit(Collider other)
+    }*/
+    /*private void OnTriggerExit(Collider other)
     {
           if(other.transform.position.y < this.transform.position.y)
         {
-
+            miku_rigi = other.GetComponent<Rigidbody>();
             this.transform.root.Find("Qmiku").transform.position = Cubemanager.orginal_miku;
             this.transform.position = Cubemanager.orginal_cube;
+            miku_rigi.drag = 20;
+            this.GetComponent<Rigidbody>().drag = 20;
+
 
         }
         else
@@ -56,5 +62,5 @@ public class Cube : MonoBehaviour {
             Destroy(this.gameObject, 1);
         }
 
-    }
+    }*/
 }

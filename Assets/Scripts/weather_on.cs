@@ -6,7 +6,7 @@ public class weather_on : MonoBehaviour {
     private bool sym = false;
     void Start()
     {
-        //this.transform.Find("weather_screen").transform.gameObject.SetActive(false);
+        this.transform.Find("weather_screen").transform.gameObject.SetActive(false);
     }
     // Use this for initialization
     void Update()

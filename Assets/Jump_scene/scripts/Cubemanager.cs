@@ -22,7 +22,7 @@ public class Cubemanager : MonoBehaviour
     {
         if (create_sym == true)
         {
-            new_cube = Instantiate(model_cube, Cube.place_cube, Quaternion.identity);
+            new_cube = Instantiate(model_cube, Qmiku.place_cube, Quaternion.identity);
             new_cube.transform.parent = this.transform;
             create_sym = false;
         }
