@@ -16,6 +16,8 @@ namespace Academy.HoloToolkit.Unity
         private bool start_sym = false;
         private Rigidbody rb;
         private Vector3 J_vector;
+        Ray ray;
+        RaycastHit hit;
         /// <summary>
         /// Tracks the hand detected state.
         /// </summary>
@@ -33,6 +35,8 @@ namespace Academy.HoloToolkit.Unity
 
 
             rb = this.transform.Find("Qmiku").GetComponent<Rigidbody>();
+            this.transform.Find("Canvas").gameObject.SetActive(false);
+            this.transform.Find("Cursor").gameObject.SetActive(false);
             InteractionManager.InteractionSourcePressed += InteractionManager_InteractionSourcePressed;
             InteractionManager.InteractionSourceReleased += InteractionManager_InteractionSourceReleased;
            
@@ -48,8 +52,33 @@ namespace Academy.HoloToolkit.Unity
 
         private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
         {
+
             Debug.Log("press");
-            hold_sym = true;
+
+            if (Qmiku.Canvas_sym==true)
+            {
+                var headPosition = Camera.main.transform.position;
+                var gazeDirection = Camera.main.transform.forward;
+
+                if (Physics.Raycast(headPosition, gazeDirection, out hit))
+                {
+                    if (hit.collider.gameObject.name == "Yes_button")
+                    {
+                        this.transform.Find("Qmiku").transform.position = Cubemanager.orginal_miku;
+                        this.transform.Find("Qmiku").GetComponent<Rigidbody>().drag = 20;
+                        this.transform.Find("Cubemanager").transform.Find("Cube(Clone)").transform.position = Cubemanager.orginal_cube;
+                        this.transform.Find("Cubemanager").transform.Find("Cube(Clone)").GetComponent<Rigidbody>().drag = 20;
+                        this.transform.Find("Canvas").gameObject.SetActive(false);
+                        this.transform.Find("Cursor").gameObject.SetActive(false);
+                        Qmiku.Canvas_sym = false;
+                        Qmiku.grade = 0;
+                    }
+                }
+            }
+            else
+            {
+                hold_sym = true;
+            }
         }
 
 
@@ -63,9 +92,9 @@ namespace Academy.HoloToolkit.Unity
         {
             if (hold_sym == false && start_sym == true)
             {
-                float length = Mathf.Sqrt(Mathf.Pow(Cube.miku_dir.x, 2) + Mathf.Pow(Cube.miku_dir.z, 2));
-                J_vector.x = Cube.miku_dir.x / length;
-                J_vector.z = Cube.miku_dir.z / length;
+                float length = Mathf.Sqrt(Mathf.Pow(Qmiku.miku_dir.x, 2) + Mathf.Pow(Qmiku.miku_dir.z, 2));
+                J_vector.x = Qmiku.miku_dir.x / length;
+                J_vector.z = Qmiku.miku_dir.z / length;
                 J_vector.y = 1f;
                 rb.AddForce(J_vector * thrust);
                 thrust = 0f;
@@ -73,7 +102,7 @@ namespace Academy.HoloToolkit.Unity
             }
             if (hold_sym == true)
             {
-                thrust += 5f;
+                thrust += 2f;
                 start_sym = true;
             }
 
