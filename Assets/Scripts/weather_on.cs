@@ -14,9 +14,9 @@ public class weather_on : MonoBehaviour {
 	public static string icon;
 	void Start()
 	{
-		//        this.transform.gameObject.SetActive(false);
-		StartCoroutine(ww());
-		this.transform.gameObject.SetActive(true);
+		        this.transform.gameObject.SetActive(false);
+//		StartCoroutine(ww());
+//		this.transform.gameObject.SetActive(true);
 
 	}
 	// Use this for initialization
@@ -26,12 +26,6 @@ public class weather_on : MonoBehaviour {
 		{
 			StartCoroutine(ww());
 			this.transform.gameObject.SetActive(true);
-			GameManager.selectedButton = null;
-
-		}
-		if (GameManager.selectedButton&&GameManager.selectedButton.name == "close_button")
-		{
-			this.transform.gameObject.SetActive(false);
 			GameManager.selectedButton = null;
 		}
 
