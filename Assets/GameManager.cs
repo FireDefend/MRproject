@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
             Debug.Log(Camera.main.WorldToScreenPoint(tmpTargetVector3) + "  target vector "); targetRotate = tmpTargetRotate;
             targetVector3 = tmpTargetVector3;
         }
-        Debug.Log(relativeScreenVector + "  relativeScreenVector"); return false;
+//        Debug.Log(relativeScreenVector + "  relativeScreenVector"); return false;
     }
     // Update is called once per frame
     void Update()
@@ -144,29 +144,29 @@ public class GameManager : MonoBehaviour
         
         
 
-//        RaycastHit hitInfo;
-//        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
-//        {
-//            // If the raycast hit a hologram, use that as the focused object.
-//            FocusedObject = hitInfo.collider.gameObject;
-//            rayhitpoint = hitInfo.point;
-//        }
-//        else
-//        {
-//            // If the raycast did not hit a hologram, clear the focused object.
-//            FocusedObject = null;
-//        }
-//
-//        // If the focused object changed this frame,
-//        // start detecting fresh gestures again.
-//        if (FocusedObject != oldFocusObject)
-//        {
-//            recognizer.CancelGestures();
-//            recognizer.StartCapturingGestures();
-//        }
+        RaycastHit hitInfo;
+        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
+        {
+            // If the raycast hit a hologram, use that as the focused object.
+            FocusedObject = hitInfo.collider.gameObject;
+            rayhitpoint = hitInfo.point;
+        }
+        else
+        {
+            // If the raycast did not hit a hologram, clear the focused object.
+            FocusedObject = null;
+        }
+
+        // If the focused object changed this frame,
+        // start detecting fresh gestures again.
+        if (FocusedObject != oldFocusObject)
+        {
+            recognizer.CancelGestures();
+            recognizer.StartCapturingGestures();
+        }
 
 
-		test_by_mouse ();
+//		test_by_mouse ();
 			
     }
 
@@ -263,6 +263,7 @@ public class GameManager : MonoBehaviour
 					button.SetActive(!menuButtonIfHidden);
 				}
 				//pending...
+
 			}
 
 

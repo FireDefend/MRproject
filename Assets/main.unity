@@ -427,6 +427,11 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
+    - target: {fileID: 54570222466952150, guid: 6be3a9fdeb6b9854e8a578621db0c957,
+        type: 2}
+      propertyPath: m_UseGravity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6be3a9fdeb6b9854e8a578621db0c957, type: 2}
   m_IsPrefabParent: 0
@@ -468,17 +473,24 @@ MonoBehaviour:
   - {fileID: 1485335083763300, guid: e473f2080d4f68041a4bf9085fe9ad0e, type: 2}
   - {fileID: 1553169454526698, guid: a9653aa67ebabc54abd1eac68f544c15, type: 2}
   - {fileID: 1651632540898946, guid: dc374f4952d7e83458e309fca97d2d44, type: 2}
+  menuChoose: 0
+  menuButtons:
+  - {fileID: 2015038038}
+  - {fileID: 1689275203}
+  - {fileID: 2055865655}
+  - {fileID: 1920108357}
+  modelChoose: 0
   danceButtons:
   - {fileID: 1133244415}
   - {fileID: 1667371135}
   - {fileID: 99527122}
   - {fileID: 2067673933}
-  modelChoose: 0
   danceChoose: 0
   gameChoose: 0
   gameButtons:
   - {fileID: 92433521}
   - {fileID: 1663866878}
+  weather_screen: {fileID: 0}
   parentCanvas: {fileID: 1006681431}
 --- !u!4 &307180868
 Transform:
@@ -901,6 +913,22 @@ MeshFilter:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 932794050}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &964340745 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1016420177702194, guid: d0ffba57bc90b48608e72816c6befe62,
+    type: 2}
+  m_PrefabInternal: {fileID: 1362055724}
+--- !u!114 &964340747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 964340745}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 24dcf32a14e1b224f9a35e7f504b60d6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1006681431
 GameObject:
   m_ObjectHideFlags: 0
@@ -1826,9 +1854,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1016420177702194, guid: d0ffba57bc90b48608e72816c6befe62, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 114041138196788826, guid: d0ffba57bc90b48608e72816c6befe62, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: d0ffba57bc90b48608e72816c6befe62, type: 2}
   m_IsPrefabParent: 0
 --- !u!1 &1423072521
