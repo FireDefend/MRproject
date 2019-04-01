@@ -19,9 +19,15 @@ public class GameManager : MonoBehaviour
     public static GameObject selectedButton=null;
     public static Vector3 hitpoint;
     private Vector3 rayhitpoint;
+
+	public int menuChoose;
+	public GameObject[] menuButtons;
+	private bool menuButtonIfHidden;
+
+	// 0 or 1 to choose different model
+	public int modelChoose;
+
     public GameObject[] danceButtons;
-    // 0 or 1 to choose different model
-    public int modelChoose;
     // 0, 1, 2, 3 to choose different dance
     public int danceChoose;
     private bool danceButtonIfHidden;
@@ -32,6 +38,19 @@ public class GameManager : MonoBehaviour
             { "dance3", 2},
             { "dance4", 3}
         };
+
+	public int gameChoose;
+	private bool gameButtonIfHidden;
+	public GameObject[] gameButtons;
+	private Dictionary<string, int> gameButtonToNum = new Dictionary<string, int>()
+	{
+		{ "jump", 0},
+		{ "shoot", 1}
+
+	};
+
+	public GameObject weather_screen;
+
     private Quaternion initRotateOfCam;
     private Quaternion initRotateOfCanvans;
     private Quaternion targetRotate;
@@ -51,46 +70,35 @@ public class GameManager : MonoBehaviour
         ani = GetComponent<Animator>();
         // Set up a GestureRecognizer to detect Select gestures.
         recognizer = new GestureRecognizer();
+		menuChoose = 0;
         modelChoose = 1;
         danceChoose = 0;
         danceButtonIfHidden = true;
+		menuButtonIfHidden = true;
+		gameChoose = 0;
+		gameButtonIfHidden = true;
+		foreach (GameObject button in menuButtons)
+		{
+			button.SetActive(!menuButtonIfHidden);
+		}
+
         foreach (GameObject button in danceButtons)
         {
             button.SetActive(!danceButtonIfHidden);
         }
 
+		foreach (GameObject button in gameButtons)
+		{
+			button.SetActive(!danceButtonIfHidden);
+		}
+
+		weather_screen = this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen").gameObject;
+
         recognizer.Tapped += (args) =>
         {
             // Send an OnSelect message to the focused object and its ancestors.
-            if (FocusedObject != null)
-            {
-                hitpoint = rayhitpoint;
-                //FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
-                selectedButton = FocusedObject;
-                if (selectedButton.name.Equals("model"))
-                {
-                    modelChoose = 1 - modelChoose;
-                }
-                if (selectedButton.name.Equals("dance"))
-                {
-                    danceButtonIfHidden = !danceButtonIfHidden;
-                    foreach (GameObject button in danceButtons)
-                    {
-                        button.SetActive(!danceButtonIfHidden);
-                    }
-                }
-                if (danceButtonToNum.ContainsKey(selectedButton.name))
-                {
-                    danceChoose = danceButtonToNum[selectedButton.name];
-                    danceButtonIfHidden = !danceButtonIfHidden;
-                    foreach (GameObject button in danceButtons)
-                    {
-                        button.SetActive(!danceButtonIfHidden);
-                    }
-                }
-
-
-            }
+			menuResponse();
+            
         };
         recognizer.StartCapturingGestures();
     }
@@ -136,25 +144,146 @@ public class GameManager : MonoBehaviour
         
         
 
-        RaycastHit hitInfo;
-        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
-        {
-            // If the raycast hit a hologram, use that as the focused object.
-            FocusedObject = hitInfo.collider.gameObject;
-            rayhitpoint = hitInfo.point;
-        }
-        else
-        {
-            // If the raycast did not hit a hologram, clear the focused object.
-            FocusedObject = null;
-        }
+//        RaycastHit hitInfo;
+//        if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
+//        {
+//            // If the raycast hit a hologram, use that as the focused object.
+//            FocusedObject = hitInfo.collider.gameObject;
+//            rayhitpoint = hitInfo.point;
+//        }
+//        else
+//        {
+//            // If the raycast did not hit a hologram, clear the focused object.
+//            FocusedObject = null;
+//        }
+//
+//        // If the focused object changed this frame,
+//        // start detecting fresh gestures again.
+//        if (FocusedObject != oldFocusObject)
+//        {
+//            recognizer.CancelGestures();
+//            recognizer.StartCapturingGestures();
+//        }
 
-        // If the focused object changed this frame,
-        // start detecting fresh gestures again.
-        if (FocusedObject != oldFocusObject)
-        {
-            recognizer.CancelGestures();
-            recognizer.StartCapturingGestures();
-        }
+
+		test_by_mouse ();
+			
     }
+
+	void menuResponse(){
+		if (FocusedObject != null)
+		{
+			hitpoint = rayhitpoint;
+			//FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
+			selectedButton = FocusedObject;
+			// Debug.LogError ("asdasdasdas" + selectedButton.name);
+			if(selectedButton.name.Equals("menu"))
+			{
+				menuButtonIfHidden = !menuButtonIfHidden;
+				foreach (GameObject button in menuButtons)
+				{
+					button.SetActive(!menuButtonIfHidden);
+				}
+				danceButtonIfHidden = true;
+				foreach (GameObject button in danceButtons)
+				{
+					button.SetActive(!danceButtonIfHidden);
+				}
+				gameButtonIfHidden = true;
+				foreach (GameObject game in gameButtons)
+				{
+					game.SetActive(!gameButtonIfHidden);
+				}
+				weather_screen.SetActive (false);
+			}
+
+			if (selectedButton.name.Equals("model"))
+			{
+				modelChoose = 1 - modelChoose;
+				menuButtonIfHidden = true;
+				foreach (GameObject button in menuButtons)
+				{
+					button.SetActive(!menuButtonIfHidden);
+				}
+
+			}
+
+			if (selectedButton.name.Equals("dance"))
+			{
+				danceButtonIfHidden = !danceButtonIfHidden;
+				foreach (GameObject button in danceButtons)
+				{
+					button.SetActive(!danceButtonIfHidden);
+				}
+
+			}
+			if (selectedButton.name.Equals("weather"))
+			{
+				weather_screen.SetActive (true);
+				menuButtonIfHidden = true;
+				Debug.LogError ("........");
+
+				foreach (GameObject button in menuButtons)
+				{
+					button.SetActive(!menuButtonIfHidden);
+				}
+
+
+			}
+
+			if(selectedButton.name.Equals("game"))
+			{
+				gameButtonIfHidden = !gameButtonIfHidden;
+				foreach (GameObject game in gameButtons)
+				{
+					game.SetActive(!gameButtonIfHidden);
+				}
+			}
+
+			if (danceButtonToNum.ContainsKey(selectedButton.name))
+			{
+				menuButtonIfHidden = !menuButtonIfHidden;
+				danceChoose = danceButtonToNum[selectedButton.name];
+				danceButtonIfHidden = !danceButtonIfHidden;
+				foreach (GameObject button in danceButtons)
+				{
+					button.SetActive(!danceButtonIfHidden);
+				}
+				foreach (GameObject button in menuButtons)
+				{
+					button.SetActive(!menuButtonIfHidden);
+				}
+
+			}
+			if (gameButtonToNum.ContainsKey(selectedButton.name))
+			{
+				menuButtonIfHidden = !menuButtonIfHidden;
+				foreach (GameObject button in menuButtons)
+				{
+					button.SetActive(!menuButtonIfHidden);
+				}
+				//pending...
+			}
+
+
+
+		}
+	
+	}
+
+	void test_by_mouse(){
+
+		var headPosition = Camera.main.transform.position;
+		var gazeDirection = Camera.main.transform.forward;
+		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
+		RaycastHit hit;
+
+		if (Input.GetMouseButtonDown (0)) {
+			if(Physics.Raycast(ray, out hit)){
+				FocusedObject = hit.collider.gameObject;
+				menuResponse ();
+			}
+
+		}
+	}
 }
