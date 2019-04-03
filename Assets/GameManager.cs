@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     public static GameObject selectedButton=null;
     public static Vector3 hitpoint;
-    private Vector3 rayhitpoint;
+    public static Vector3 rayhitpoint;
 
 	public int menuChoose;
 	public GameObject[] menuButtons;
@@ -124,7 +125,8 @@ public class GameManager : MonoBehaviour
             Debug.Log(Camera.main.WorldToScreenPoint(tmpTargetVector3) + "  target vector "); targetRotate = tmpTargetRotate;
             targetVector3 = tmpTargetVector3;
         }
-//        Debug.Log(relativeScreenVector + "  relativeScreenVector"); return false;
+//        Debug.Log(relativeScreenVector + "  relativeScreenVector"); 
+		return false;
     }
     // Update is called once per frame
     void Update()
@@ -263,6 +265,7 @@ public class GameManager : MonoBehaviour
 					button.SetActive(!menuButtonIfHidden);
 				}
 				//pending...
+				SceneManager.LoadSceneAsync(selectedButton.name);
 
 			}
 
