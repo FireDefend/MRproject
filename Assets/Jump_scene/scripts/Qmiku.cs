@@ -8,12 +8,13 @@ public class Qmiku : MonoBehaviour {
     // Use this for initialization
     public static Vector3 place_cube;
     public static Vector3 miku_dir;
-    public static bool Canvas_sym = false;
+    public static bool Canvas_sym;
     private Rigidbody miku_rigi;
-    public static int grade = -10;
+    public static int grade;
     private string grade_text;
     void Start() {
-
+        Canvas_sym = false;
+        grade = -10;
     }
 
     // Update is called once per frame
@@ -45,6 +46,7 @@ public class Qmiku : MonoBehaviour {
         {
             transform.root.Find("Canvas").gameObject.SetActive(true);
             transform.root.Find("Cursor").gameObject.SetActive(true);
+            transform.root.Find("Canvas").transform.position= Camera.main.transform.position + Camera.main.transform.forward * 2;
             grade_text = "You got " + grade + " points\n" + "      try again?";
             transform.root.Find("Canvas").transform.Find("Text").GetComponent<Text>().text = grade_text;
             Canvas_sym = true;

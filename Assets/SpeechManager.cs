@@ -7,39 +7,58 @@ public class SpeechManager : MonoBehaviour
 {
     KeywordRecognizer keywordRecognizer = null;
     Dictionary<string, System.Action> keywords = new Dictionary<string, System.Action>();
-    public GameObject test;
-    public int danceType = 0;
-    public bool weatherButton = false;
+    public GameObject selecttemp;
+    public static bool speech_sym;
+    public static bool stop_sym;
+    public static bool dance_sym;
     // Use this for initialization
     void Start()
     {
-        
+        speech_sym = false;
+        stop_sym = false;
+        dance_sym = false;
         keywords.Add("weather", () =>
         {
             // Call the OnReset method on every descendant object.
             // this.BroadcastMessage("OnReset");
             Debug.Log("weather");
-            
-            weatherButton = !weatherButton;
+            GameManager.selectedButton = this.transform.Find("Canvas").transform.Find("weather").gameObject;
         });
         keywords.Add("dance one", () =>
         {
             Debug.Log("dance one");
-            
-            danceType = 1;
+            speech_sym = true;
+            GameManager.selectedButton = this.transform.Find("Canvas").transform.Find("dance1").gameObject;
         });
         keywords.Add("dance two", () =>
         {
             Debug.Log("dance two");
-            danceType = 2;
+            speech_sym = true;
+            GameManager.selectedButton = this.transform.Find("Canvas").transform.Find("dance2").gameObject;
         });
-        keywords.Add("dance three", () =>
+        keywords.Add("model", () =>
         {
-            danceType = 3;
+            GameManager.selectedButton = this.transform.Find("Canvas").transform.Find("model").gameObject;
         });
-        keywords.Add("dance four", () =>
+        keywords.Add("game", () =>
         {
-            danceType = 4;
+            GameManager.selectedButton = this.transform.Find("Canvas").transform.Find("game").gameObject;
+        });
+        keywords.Add("close", () =>
+        {
+            this.transform.Find("weather_screen").transform.gameObject.SetActive(false);
+        });
+        keywords.Add("stop", () =>
+        {
+            speech_sym = false;
+            stop_sym = true;
+            GameManager.selectedButton = null;
+
+        });
+        keywords.Add("go there", () =>
+        {
+            GameManager.hitpoint=GameManager.rayhitpoint;
+            GameManager.selectedButton = selecttemp;
         });
 
         // Tell the KeywordRecognizer about our keywords.

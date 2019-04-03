@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -16,16 +17,16 @@ public class GameManager : MonoBehaviour
     private Animator ani;
     // variables for menu
 
-    public static GameObject selectedButton=null;
+    public static GameObject selectedButton = null;
     public static Vector3 hitpoint;
-    private Vector3 rayhitpoint;
+    public static Vector3 rayhitpoint;
 
-	public int menuChoose;
-	public GameObject[] menuButtons;
-	private bool menuButtonIfHidden;
+    public int menuChoose;
+    public GameObject[] menuButtons;
+    private bool menuButtonIfHidden;
 
-	// 0 or 1 to choose different model
-	public int modelChoose;
+    // 0 or 1 to choose different model
+    public int modelChoose;
 
     public GameObject[] danceButtons;
     // 0, 1, 2, 3 to choose different dance
@@ -39,17 +40,17 @@ public class GameManager : MonoBehaviour
             { "dance4", 3}
         };
 
-	public int gameChoose;
-	private bool gameButtonIfHidden;
-	public GameObject[] gameButtons;
-	private Dictionary<string, int> gameButtonToNum = new Dictionary<string, int>()
-	{
-		{ "jump", 0},
-		{ "shoot", 1}
+    public int gameChoose;
+    private bool gameButtonIfHidden;
+    public GameObject[] gameButtons;
+    private Dictionary<string, int> gameButtonToNum = new Dictionary<string, int>()
+    {
+        { "jump", 0},
+        { "shoot", 1}
 
-	};
+    };
 
-	public GameObject weather_screen;
+    public GameObject weather_screen;
 
     private Quaternion initRotateOfCam;
     private Quaternion initRotateOfCanvans;
@@ -70,35 +71,35 @@ public class GameManager : MonoBehaviour
         ani = GetComponent<Animator>();
         // Set up a GestureRecognizer to detect Select gestures.
         recognizer = new GestureRecognizer();
-		menuChoose = 0;
+        menuChoose = 0;
         modelChoose = 1;
         danceChoose = 0;
         danceButtonIfHidden = true;
-		menuButtonIfHidden = true;
-		gameChoose = 0;
-		gameButtonIfHidden = true;
-		foreach (GameObject button in menuButtons)
-		{
-			button.SetActive(!menuButtonIfHidden);
-		}
+        menuButtonIfHidden = true;
+        gameChoose = 0;
+        gameButtonIfHidden = true;
+        foreach (GameObject button in menuButtons)
+        {
+            button.SetActive(!menuButtonIfHidden);
+        }
 
         foreach (GameObject button in danceButtons)
         {
             button.SetActive(!danceButtonIfHidden);
         }
 
-		foreach (GameObject button in gameButtons)
-		{
-			button.SetActive(!danceButtonIfHidden);
-		}
+        foreach (GameObject button in gameButtons)
+        {
+            button.SetActive(!danceButtonIfHidden);
+        }
 
-		weather_screen = this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen").gameObject;
+        weather_screen = this.transform.Find("stage/Hatsune Miku_PjD/weather_screen").gameObject;
 
         recognizer.Tapped += (args) =>
         {
             // Send an OnSelect message to the focused object and its ancestors.
-			menuResponse();
-            
+            menuResponse();
+
         };
         recognizer.StartCapturingGestures();
     }
@@ -124,7 +125,8 @@ public class GameManager : MonoBehaviour
             Debug.Log(Camera.main.WorldToScreenPoint(tmpTargetVector3) + "  target vector "); targetRotate = tmpTargetRotate;
             targetVector3 = tmpTargetVector3;
         }
-//        Debug.Log(relativeScreenVector + "  relativeScreenVector"); return false;
+        //        Debug.Log(relativeScreenVector + "  relativeScreenVector"); 
+        return false;
     }
     // Update is called once per frame
     void Update()
@@ -141,8 +143,8 @@ public class GameManager : MonoBehaviour
         // head position and orientation.
         var headPosition = Camera.main.transform.position;
         var gazeDirection = Camera.main.transform.forward;
-        
-        
+
+
 
         RaycastHit hitInfo;
         if (Physics.Raycast(headPosition, gazeDirection, out hitInfo))
@@ -166,125 +168,129 @@ public class GameManager : MonoBehaviour
         }
 
 
-//		test_by_mouse ();
-			
+        test_by_mouse();
+
     }
 
-	void menuResponse(){
-		if (FocusedObject != null)
-		{
-			hitpoint = rayhitpoint;
-			//FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
-			selectedButton = FocusedObject;
-			// Debug.LogError ("asdasdasdas" + selectedButton.name);
-			if(selectedButton.name.Equals("menu"))
-			{
-				menuButtonIfHidden = !menuButtonIfHidden;
-				foreach (GameObject button in menuButtons)
-				{
-					button.SetActive(!menuButtonIfHidden);
-				}
-				danceButtonIfHidden = true;
-				foreach (GameObject button in danceButtons)
-				{
-					button.SetActive(!danceButtonIfHidden);
-				}
-				gameButtonIfHidden = true;
-				foreach (GameObject game in gameButtons)
-				{
-					game.SetActive(!gameButtonIfHidden);
-				}
-				weather_screen.SetActive (false);
-			}
+    void menuResponse()
+    {
+        if (FocusedObject != null)
+        {
+            hitpoint = rayhitpoint;
+            //FocusedObject.SendMessageUpwards("OnSelect", SendMessageOptions.DontRequireReceiver);
+            selectedButton = FocusedObject;
+            // Debug.LogError ("asdasdasdas" + selectedButton.name);
+            if (selectedButton.name.Equals("menu"))
+            {
+                menuButtonIfHidden = !menuButtonIfHidden;
+                foreach (GameObject button in menuButtons)
+                {
+                    button.SetActive(!menuButtonIfHidden);
+                }
+                danceButtonIfHidden = true;
+                foreach (GameObject button in danceButtons)
+                {
+                    button.SetActive(!danceButtonIfHidden);
+                }
+                gameButtonIfHidden = true;
+                foreach (GameObject game in gameButtons)
+                {
+                    game.SetActive(!gameButtonIfHidden);
+                }
+                weather_screen.SetActive(false);
+            }
 
-			if (selectedButton.name.Equals("model"))
-			{
-				modelChoose = 1 - modelChoose;
-				menuButtonIfHidden = true;
-				foreach (GameObject button in menuButtons)
-				{
-					button.SetActive(!menuButtonIfHidden);
-				}
+            if (selectedButton.name.Equals("model"))
+            {
+                modelChoose = 1 - modelChoose;
+                menuButtonIfHidden = true;
+                foreach (GameObject button in menuButtons)
+                {
+                    button.SetActive(!menuButtonIfHidden);
+                }
 
-			}
+            }
 
-			if (selectedButton.name.Equals("dance"))
-			{
-				danceButtonIfHidden = !danceButtonIfHidden;
-				foreach (GameObject button in danceButtons)
-				{
-					button.SetActive(!danceButtonIfHidden);
-				}
+            if (selectedButton.name.Equals("dance"))
+            {
+                danceButtonIfHidden = !danceButtonIfHidden;
+                foreach (GameObject button in danceButtons)
+                {
+                    button.SetActive(!danceButtonIfHidden);
+                }
 
-			}
-			if (selectedButton.name.Equals("weather"))
-			{
-				weather_screen.SetActive (true);
-				menuButtonIfHidden = true;
-				Debug.LogError ("........");
+            }
+            if (selectedButton.name.Equals("weather"))
+            {
+                weather_screen.SetActive(true);
+                menuButtonIfHidden = true;
+                //				Debug.LogError ("........");
 
-				foreach (GameObject button in menuButtons)
-				{
-					button.SetActive(!menuButtonIfHidden);
-				}
-
-
-			}
-
-			if(selectedButton.name.Equals("game"))
-			{
-				gameButtonIfHidden = !gameButtonIfHidden;
-				foreach (GameObject game in gameButtons)
-				{
-					game.SetActive(!gameButtonIfHidden);
-				}
-			}
-
-			if (danceButtonToNum.ContainsKey(selectedButton.name))
-			{
-				menuButtonIfHidden = !menuButtonIfHidden;
-				danceChoose = danceButtonToNum[selectedButton.name];
-				danceButtonIfHidden = !danceButtonIfHidden;
-				foreach (GameObject button in danceButtons)
-				{
-					button.SetActive(!danceButtonIfHidden);
-				}
-				foreach (GameObject button in menuButtons)
-				{
-					button.SetActive(!menuButtonIfHidden);
-				}
-
-			}
-			if (gameButtonToNum.ContainsKey(selectedButton.name))
-			{
-				menuButtonIfHidden = !menuButtonIfHidden;
-				foreach (GameObject button in menuButtons)
-				{
-					button.SetActive(!menuButtonIfHidden);
-				}
-				//pending...
-
-			}
+                foreach (GameObject button in menuButtons)
+                {
+                    button.SetActive(!menuButtonIfHidden);
+                }
 
 
+            }
 
-		}
-	
-	}
+            if (selectedButton.name.Equals("game"))
+            {
+                gameButtonIfHidden = !gameButtonIfHidden;
+                foreach (GameObject game in gameButtons)
+                {
+                    game.SetActive(!gameButtonIfHidden);
+                }
+            }
 
-	void test_by_mouse(){
+            if (danceButtonToNum.ContainsKey(selectedButton.name))
+            {
+                menuButtonIfHidden = !menuButtonIfHidden;
+                danceChoose = danceButtonToNum[selectedButton.name];
+                danceButtonIfHidden = !danceButtonIfHidden;
+                foreach (GameObject button in danceButtons)
+                {
+                    button.SetActive(!danceButtonIfHidden);
+                }
+                foreach (GameObject button in menuButtons)
+                {
+                    button.SetActive(!menuButtonIfHidden);
+                }
 
-		var headPosition = Camera.main.transform.position;
-		var gazeDirection = Camera.main.transform.forward;
-		Ray ray = Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hit;
+            }
+            if (gameButtonToNum.ContainsKey(selectedButton.name))
+            {
+                menuButtonIfHidden = !menuButtonIfHidden;
+                foreach (GameObject button in menuButtons)
+                {
+                    button.SetActive(!menuButtonIfHidden);
+                }
+                //pending...
+                SceneManager.LoadSceneAsync(selectedButton.name);
+            }
 
-		if (Input.GetMouseButtonDown (0)) {
-			if(Physics.Raycast(ray, out hit)){
-				FocusedObject = hit.collider.gameObject;
-				menuResponse ();
-			}
 
-		}
-	}
+
+        }
+
+    }
+
+    void test_by_mouse()
+    {
+
+        var headPosition = Camera.main.transform.position;
+        var gazeDirection = Camera.main.transform.forward;
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+
+        if (Input.GetMouseButtonDown(0))
+        {
+            if (Physics.Raycast(ray, out hit))
+            {
+                FocusedObject = hit.collider.gameObject;
+                menuResponse();
+            }
+
+        }
+    }
 }
