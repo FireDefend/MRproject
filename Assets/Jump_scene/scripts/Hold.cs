@@ -1,7 +1,9 @@
 ﻿using UnityEngine.XR.WSA.Input;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Collections;
 using System.Collections.Generic;
+
 
 /// <summary>
 /// HandsManager keeps track of when a hand is detected.
@@ -16,6 +18,9 @@ namespace Academy.HoloToolkit.Unity
         private bool start_sym = false;
         private Rigidbody rb;
         private Vector3 J_vector;
+        public GameObject model_cube;
+        private GameObject new_cube;
+        private bool hand_sym;
         Ray ray;
         RaycastHit hit;
         /// <summary>
@@ -37,6 +42,8 @@ namespace Academy.HoloToolkit.Unity
             rb = this.transform.Find("Qmiku").GetComponent<Rigidbody>();
             this.transform.Find("Canvas").gameObject.SetActive(false);
             this.transform.Find("Cursor").gameObject.SetActive(false);
+            InteractionManager.InteractionSourceDetected += InteractionManager_InteractionSourceDetected;
+            InteractionManager.InteractionSourceLost += InteractionManager_InteractionSourceLost;
             InteractionManager.InteractionSourcePressed += InteractionManager_InteractionSourcePressed;
             InteractionManager.InteractionSourceReleased += InteractionManager_InteractionSourceReleased;
            
@@ -44,10 +51,22 @@ namespace Academy.HoloToolkit.Unity
             FocusedGameObject = null;
         }
 
+        private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
+        {
+            hand_sym = false;
+        }
+
+        private void InteractionManager_InteractionSourceDetected(InteractionSourceDetectedEventArgs obj)
+        {
+            hand_sym = true;
+        }
+
         private void InteractionManager_InteractionSourceReleased(InteractionSourceReleasedEventArgs obj)
         {
             Debug.Log("release");
-            hold_sym = false;
+            if (hand_sym == true)
+            { hold_sym = false; }
+
         }
 
         private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
@@ -64,18 +83,32 @@ namespace Academy.HoloToolkit.Unity
                 {
                     if (hit.collider.gameObject.name == "Yes_button")
                     {
-                        this.transform.Find("Qmiku").transform.position = Cubemanager.orginal_miku;
-                        this.transform.Find("Qmiku").GetComponent<Rigidbody>().drag = 20;
-                        this.transform.Find("Cubemanager").transform.Find("Cube(Clone)").transform.position = Cubemanager.orginal_cube;
-                        this.transform.Find("Cubemanager").transform.Find("Cube(Clone)").GetComponent<Rigidbody>().drag = 20;
-                        this.transform.Find("Canvas").gameObject.SetActive(false);
-                        this.transform.Find("Cursor").gameObject.SetActive(false);
-                        Qmiku.Canvas_sym = false;
-                        Qmiku.grade = 0;
+                        for (int i = this.transform.Find("Cubemanager").childCount - 1; i >= 0; i--)
+                        {
+                            Destroy(this.transform.Find("Cubemanager").GetChild(i).gameObject);
+                        }
+                         this.transform.Find("Qmiku").transform.position = Cubemanager.orginal_miku;
+                         this.transform.Find("Qmiku").GetComponent<Rigidbody>().drag = 20;
+                         new_cube = Instantiate(model_cube, Qmiku.place_cube, Quaternion.identity);
+                         new_cube.transform.parent = this.transform.Find("Cubemanager").transform;
+                         new_cube.transform.position = Cubemanager.orginal_cube;
+                         new_cube.GetComponent<Rigidbody>().drag = 20;
+                         this.transform.Find("Canvas").gameObject.SetActive(false);
+                         this.transform.Find("Cursor").gameObject.SetActive(false);
+                         Qmiku.Canvas_sym = false;
+                         Qmiku.grade = 0;
+                        //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
+                       
+
+                    }
+                    else if (hit.collider.gameObject.name == "No_button")
+                    {
+                        SceneManager.LoadSceneAsync("main", LoadSceneMode.Single);
+
                     }
                 }
             }
-            else
+            else if(hand_sym==true)
             {
                 hold_sym = true;
             }
@@ -84,7 +117,8 @@ namespace Academy.HoloToolkit.Unity
 
         void OnDestroy()
         {
-
+            InteractionManager.InteractionSourceDetected -= InteractionManager_InteractionSourceDetected;
+            InteractionManager.InteractionSourceLost -= InteractionManager_InteractionSourceLost;
             InteractionManager.InteractionSourcePressed -= InteractionManager_InteractionSourcePressed;
             InteractionManager.InteractionSourceReleased -= InteractionManager_InteractionSourceReleased;
         }
