@@ -92,8 +92,12 @@ public class GameManager : MonoBehaviour
 		{
 			button.SetActive(!danceButtonIfHidden);
 		}
+		if (this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen")) {
+			weather_screen = this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen").gameObject;
+		} else {
+			weather_screen = null;
+		}
 
-		weather_screen = this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen").gameObject;
 
         recognizer.Tapped += (args) =>
         {
@@ -196,7 +200,9 @@ public class GameManager : MonoBehaviour
 				{
 					game.SetActive(!gameButtonIfHidden);
 				}
-				weather_screen.SetActive (false);
+				if (weather_screen != null) {
+					weather_screen.SetActive (false);
+				}
 			}
 
 			if (selectedButton.name.Equals("model"))
@@ -221,10 +227,11 @@ public class GameManager : MonoBehaviour
 			}
 			if (selectedButton.name.Equals("weather"))
 			{
-				weather_screen.SetActive (true);
+				
+				if (weather_screen != null) {
+					weather_screen.SetActive (true);
+				}
 				menuButtonIfHidden = true;
-				Debug.LogError ("........");
-
 				foreach (GameObject button in menuButtons)
 				{
 					button.SetActive(!menuButtonIfHidden);
