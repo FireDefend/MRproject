@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Move : MonoBehaviour
 {
-    private Animator ani;
-    bool signal = false;
-    bool start_move = false;
+    public static Animator ani;
+    public static bool signal = false;
+    private bool start_move = false;
     private Vector3 route;
-    private  Vector3 last_hitpoint;
+    public static  Vector3 last_hitpoint;
     private string buttun_name=null;
     private GameObject creatmodel;
     private Vector3 look_rotation1;
     private Vector3 look_rotation2;
+    private Vector3 controller_dir;
 
 
 
@@ -35,22 +37,34 @@ public class Move : MonoBehaviour
             Vector3 dir = new Vector3(horizontal, 0, vertical);
             if (dir != Vector3.zero)
             {
-                transform.rotation = Quaternion.LookRotation(dir);
+                SpeechManager.speech_sym = false;
+                SpeechManager.dance_sym = false;
+                signal = false;
+                Camera.main.transform.Find("dir_object").transform.localPosition = dir;
+                controller_dir = Camera.main.transform.Find("dir_object").transform.position- Camera.main.transform.position;
+                controller_dir.y = 0;
+                controller_dir.Normalize();
+                transform.rotation = Quaternion.LookRotation(controller_dir);
                 ani.SetInteger("walk", 2);
-                transform.Translate(dir * 0.3f * Time.deltaTime, Space.World);
+                transform.Translate(controller_dir * 0.3f * Time.deltaTime, Space.World);
             }
-            if(dir == Vector3.zero&&signal==false) { ani.SetInteger("walk", 1); }
+            if(dir == Vector3.zero&&signal==false&&SpeechManager.speech_sym==false&&SpeechManager.dance_sym==false) { ani.SetInteger("walk", 1); }
         }
 
-        if (last_hitpoint != GameManager.hitpoint&&start_move==true&& GameManager.selectedButton.transform.root.name != "GameManager")
+        if (GameManager.selectedButton)
         {
-            last_hitpoint = GameManager.hitpoint;
-            ani.SetInteger("walk", 2);
-            signal = true;
-            float one = Mathf.Sqrt(Mathf.Pow(last_hitpoint.x - transform.position.x, 2) + Mathf.Pow(last_hitpoint.z - transform.position.z, 2));
-            route = new Vector3((last_hitpoint.x - transform.position.x) / one, 0, (last_hitpoint.z - transform.position.z) / one);
-            transform.rotation = Quaternion.LookRotation(route);
+            if (last_hitpoint != GameManager.hitpoint && start_move == true && GameManager.selectedButton.transform.root.name != "GameManager")
+            {
+                last_hitpoint = GameManager.hitpoint;
+                ani.SetInteger("walk", 2);
+                SpeechManager.speech_sym = false;
+                SpeechManager.dance_sym = false;
+                signal = true;
+                float one = Mathf.Sqrt(Mathf.Pow(last_hitpoint.x - transform.position.x, 2) + Mathf.Pow(last_hitpoint.z - transform.position.z, 2));
+                route = new Vector3((last_hitpoint.x - transform.position.x) / one, 0, (last_hitpoint.z - transform.position.z) / one);
+                transform.rotation = Quaternion.LookRotation(route);
 
+            }
         }
 
 
@@ -82,20 +96,38 @@ public class Move : MonoBehaviour
         if (GameManager.selectedButton && GameManager.selectedButton.name == "dance1")
         {
             ani.SetInteger("walk", 3);
+            SpeechManager.dance_sym=true;
             GameManager.selectedButton = this.gameObject;
         }
         if (GameManager.selectedButton && GameManager.selectedButton.name == "dance2")
         {
             ani.SetInteger("walk", 4);
+            SpeechManager.dance_sym = true;
             GameManager.selectedButton = this.gameObject;
         }
+       /* if (GameManager.selectedButton && GameManager.selectedButton.name == "game")
+        {
+            GameManager.selectedButton = null;
+            SceneManager.LoadSceneAsync("jump", LoadSceneMode.Single);
+
+
+        }*/
 
 
         if (ani.GetCurrentAnimatorStateInfo(0).IsName("idle_face_vmd 0"))
         {
             ani.SetInteger("walk", 1);
+            SpeechManager.dance_sym = false;
+            SpeechManager.speech_sym = false;
         }
 
+        if (SpeechManager.stop_sym == true)
+        {
+            ani.SetInteger("walk", 1);
+            signal = false;
+            SpeechManager.dance_sym = false;
+            SpeechManager.stop_sym = false;
+        }
 
 
 
