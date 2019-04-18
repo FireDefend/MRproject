@@ -38,7 +38,7 @@ namespace Academy.HoloToolkit.Unity
         void Awake()
         {
 
-
+          
             rb = this.transform.Find("Qmiku").GetComponent<Rigidbody>();
             this.transform.Find("Canvas").gameObject.SetActive(false);
             this.transform.Find("Cursor").gameObject.SetActive(false);
@@ -54,11 +54,21 @@ namespace Academy.HoloToolkit.Unity
         private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
         {
             hand_sym = false;
+            if (hold_sym == true)
+            {
+                thrust = 0f;
+                hold_sym = false;
+                start_sym = false;
+                Qmiku.Qmiku_ani.SetInteger("motion", 1);
+                this.transform.Find("Grade_screen").transform.Find("detect_text").gameObject.SetActive(true);
+            }
+
         }
 
         private void InteractionManager_InteractionSourceDetected(InteractionSourceDetectedEventArgs obj)
         {
             hand_sym = true;
+            this.transform.Find("Grade_screen").transform.Find("detect_text").gameObject.SetActive(false);
         }
 
         private void InteractionManager_InteractionSourceReleased(InteractionSourceReleasedEventArgs obj)
@@ -87,6 +97,8 @@ namespace Academy.HoloToolkit.Unity
                         {
                             Destroy(this.transform.Find("Cubemanager").GetChild(i).gameObject);
                         }
+                         this.transform.Find("Qmiku").transform.gameObject.SetActive(true);
+                         Qmiku.Qmiku_ani.SetInteger("motion", 1);
                          this.transform.Find("Qmiku").transform.position = Cubemanager.orginal_miku;
                          this.transform.Find("Qmiku").GetComponent<Rigidbody>().drag = 20;
                          new_cube = Instantiate(model_cube, Qmiku.place_cube, Quaternion.identity);
@@ -96,9 +108,10 @@ namespace Academy.HoloToolkit.Unity
                          this.transform.Find("Canvas").gameObject.SetActive(false);
                          this.transform.Find("Cursor").gameObject.SetActive(false);
                          Qmiku.Canvas_sym = false;
-                         Qmiku.grade = 0;
+                         Qmiku.grade = -20;
+                         this.transform.Find("Grade_screen").transform.Find("Text").gameObject.SetActive(false);
                         //SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex,LoadSceneMode.Single);
-                       
+
 
                     }
                     else if (hit.collider.gameObject.name == "No_button")
@@ -111,6 +124,7 @@ namespace Academy.HoloToolkit.Unity
             else if(hand_sym==true)
             {
                 hold_sym = true;
+                Qmiku.Qmiku_ani.SetInteger("motion", 0);
             }
         }
 
@@ -133,9 +147,11 @@ namespace Academy.HoloToolkit.Unity
                 rb.AddForce(J_vector * thrust);
                 thrust = 0f;
                 start_sym = false;
+                Qmiku.Qmiku_ani.SetInteger("motion", 1);
             }
             if (hold_sym == true)
             {
+               
                 thrust += 2f;
                 start_sym = true;
             }
