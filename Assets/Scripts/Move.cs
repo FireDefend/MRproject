@@ -39,6 +39,7 @@ public class Move : MonoBehaviour
             {
                 SpeechManager.speech_sym = false;
                 SpeechManager.dance_sym = false;
+                GameManager.weather_screen.SetActive(false);
                 signal = false;
                 Camera.main.transform.Find("dir_object").transform.localPosition = dir;
                 controller_dir = Camera.main.transform.Find("dir_object").transform.position- Camera.main.transform.position;
@@ -59,6 +60,7 @@ public class Move : MonoBehaviour
                 ani.SetInteger("walk", 2);
                 SpeechManager.speech_sym = false;
                 SpeechManager.dance_sym = false;
+                GameManager.weather_screen.SetActive(false);
                 signal = true;
                 float one = Mathf.Sqrt(Mathf.Pow(last_hitpoint.x - transform.position.x, 2) + Mathf.Pow(last_hitpoint.z - transform.position.z, 2));
                 route = new Vector3((last_hitpoint.x - transform.position.x) / one, 0, (last_hitpoint.z - transform.position.z) / one);
@@ -87,6 +89,8 @@ public class Move : MonoBehaviour
             look_rotation1 = -Camera.main.transform.forward;
             look_rotation2 = new Vector3(look_rotation1.x, 0, look_rotation1.z);
             creatmodel.transform.rotation = Quaternion.LookRotation(look_rotation2);
+            GameManager.weather_screen = creatmodel.transform.Find("weather_screen").gameObject;
+            GameManager.weather_screen.SetActive(false);
             //look_rotation = new Vector3(Camera.main.transform.position.x, 0, Camera.main.transform.position.z);
             //creatmodel.transform.rotation = Quaternion.LookRotation(-look_rotation);
             GameManager.selectedButton = null;

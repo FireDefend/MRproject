@@ -10,12 +10,21 @@ public class Cubemanager : MonoBehaviour
     public static bool create_sym;
     public static Vector3 orginal_miku;
     public static Vector3 orginal_cube;
+    private Vector3 forwardvector;
+    private Vector3 upvector_miku;
+    private Vector3 upvector_cube;
     // Use this for initialization
     void Start()
     {
         time_count = 61;
         create_sym = false;
-        orginal_miku=this.transform.root.Find("Qmiku").transform.position;
+        upvector_miku = new Vector3(0, 0.6f, 0);
+        upvector_cube = new Vector3(0, 0.4f, 0);
+        forwardvector = Camera.main.transform.position + Camera.main.transform.forward * 2;
+        forwardvector.y = 0;
+        this.transform.root.Find("Qmiku").transform.position = forwardvector + upvector_miku;
+        this.transform.Find("Cube").transform.position = forwardvector+upvector_cube;
+        orginal_miku =this.transform.root.Find("Qmiku").transform.position;
         orginal_cube=this.transform.Find("Cube").transform.position;
 }
 

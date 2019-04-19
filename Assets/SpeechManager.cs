@@ -22,7 +22,7 @@ public class SpeechManager : MonoBehaviour
             // Call the OnReset method on every descendant object.
             // this.BroadcastMessage("OnReset");
             Debug.Log("weather");
-            GameManager.selectedButton = this.transform.Find("Canvas").transform.Find("weather").gameObject;
+            GameManager.weather_screen.SetActive(true);
         });
         keywords.Add("dance one", () =>
         {
@@ -46,7 +46,7 @@ public class SpeechManager : MonoBehaviour
         });
         keywords.Add("close", () =>
         {
-            this.transform.Find("weather_screen").transform.gameObject.SetActive(false);
+            GameManager.weather_screen.SetActive(false);
         });
         keywords.Add("stop", () =>
         {
@@ -57,6 +57,7 @@ public class SpeechManager : MonoBehaviour
         });
         keywords.Add("go there", () =>
         {
+            GameManager.weather_screen.SetActive(false);
             GameManager.hitpoint=GameManager.rayhitpoint;
             GameManager.selectedButton = selecttemp;
         });

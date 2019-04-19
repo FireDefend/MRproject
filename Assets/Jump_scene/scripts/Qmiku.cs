@@ -21,6 +21,7 @@ public class Qmiku : MonoBehaviour {
     private GameObject repeat_item;
     private bool start_sym;
     private int stay_count;
+    private Vector3 look_vector;
     void Start() {
         SceneManager.UnloadSceneAsync("loading");
         stay_count = 0;
@@ -34,6 +35,9 @@ public class Qmiku : MonoBehaviour {
         Qmiku_ani = GetComponent<Animator>();
         Qmiku_ani.SetInteger("motion", 2);
         this.transform.root.transform.Find("Grade_screen").transform.Find("detect_text").gameObject.SetActive(false);
+        look_vector = -Camera.main.transform.forward;
+        look_vector.y = 0;
+        this.transform.rotation = Quaternion.LookRotation(look_vector);
     }
 
     // Update is called once per frame
@@ -42,7 +46,7 @@ public class Qmiku : MonoBehaviour {
         transform.root.Find("Grade_screen").transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
         realtime_grade_text = grade + " points\n";
         transform.root.Find("Grade_screen").transform.Find("Text").GetComponent<Text>().text = realtime_grade_text;
-        if(Vector3.Distance(this.transform.position,Camera.main.transform.position)>50)
+        if(Vector3.Distance(this.transform.position,Camera.main.transform.position)>10)
         {
              transform.root.Find("Canvas").gameObject.SetActive(true);
              transform.root.Find("Cursor").gameObject.SetActive(true);

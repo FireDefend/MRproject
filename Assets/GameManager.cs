@@ -35,9 +35,8 @@ public class GameManager : MonoBehaviour
     private Dictionary<string, int> danceButtonToNum = new Dictionary<string, int>()
         {
             { "dance1", 0},
-            { "dance2", 1},
-            { "dance3", 2},
-            { "dance4", 3}
+            { "dance2", 1}
+
         };
 
 	public int gameChoose;
@@ -50,7 +49,7 @@ public class GameManager : MonoBehaviour
 
 	};
 
-	public GameObject weather_screen;
+	public static GameObject weather_screen;
 
     private Quaternion initRotateOfCam;
     private Quaternion initRotateOfCanvans;
@@ -94,6 +93,7 @@ public class GameManager : MonoBehaviour
 		}
 		if (this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen")) {
 			weather_screen = this.transform.Find ("stage/Hatsune Miku_PjD/weather_screen").gameObject;
+            weather_screen.SetActive(false);
 		} else {
 			weather_screen = null;
 		}
@@ -172,7 +172,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-//		test_by_mouse ();
+		test_by_mouse ();
 			
     }
 
@@ -271,10 +271,13 @@ public class GameManager : MonoBehaviour
 				{
 					button.SetActive(!menuButtonIfHidden);
 				}
-				//pending...
-				SceneManager.LoadSceneAsync(selectedButton.name);
+                //pending...
+                if (selectedButton.name == "jump")
+                {
+                    SceneManager.LoadSceneAsync("loading", LoadSceneMode.Additive);
+                }
 
-			}
+            }
 
 
 
