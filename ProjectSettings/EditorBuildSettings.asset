@@ -8,6 +8,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/main.unity
     guid: 778b1517fb29ccb4fb20c3b0caf5d50c
-  - enabled: 0
+  - enabled: 1
     path: Assets/jump.unity
     guid: 09c278da9685bc841857da00deae4018
+  - enabled: 1
+    path: Assets/survive.unity
+    guid: 79a0c4564cc36ca47a03226da7391fca

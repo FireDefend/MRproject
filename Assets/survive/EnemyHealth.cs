@@ -20,8 +20,8 @@ public class EnemyHealth : MonoBehaviour {
         enemyCurHealth = enemyFullHealth;
         bloodFX =Resources.Load<GameObject>("BloodFX");
 		ani=GetComponent<Animator>();
-		scoreText = GameObject.FindGameObjectWithTag ("ScoreText").GetComponent<Text>();
-		expControl = GameObject.FindGameObjectWithTag ("WeaponEXPFillImage").GetComponent<EXPControl>();
+		//scoreText = GameObject.FindGameObjectWithTag ("ScoreText").GetComponent<Text>();
+		//expControl = GameObject.FindGameObjectWithTag ("WeaponEXPFillImage").GetComponent<EXPControl>();
     }
 
 	void Start(){
@@ -36,7 +36,6 @@ public class EnemyHealth : MonoBehaviour {
 			return;
 		}
 		enemyCurHealth -= damage;
-        Debug.LogError("enemyCurHealth" + enemyCurHealth);
 		ani.SetTrigger ("Hit");
 		if (enemyCurHealth<=0) {
 			Death ();
@@ -57,12 +56,14 @@ public class EnemyHealth : MonoBehaviour {
             scoreCount += thisScore;
             scoreText.text = scoreCount.ToString();
         }
-		
-		GetComponent<EnemyController> ().isCanMove = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<SurviveModelController>().scoreNum += thisScore;
+        GetComponent<EnemyController> ().isCanMove = false;
 		GetComponent<NavMeshAgent> ().Stop ();
 		ani.SetTrigger ("Death");
 		Destroy (gameObject,5);
-	}
+        GameObject.FindGameObjectWithTag("Finish").GetComponent<IniteController>().curEnemyNum--;
+
+    }
 
 
 

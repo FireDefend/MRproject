@@ -11,25 +11,30 @@ public class PlayerHealth : MonoBehaviour {
 	Image bloodFillImage;
 	Text gameOverText;
 	Image getHurtImage;
+    GameObject canvasEnd;
 	void Awake(){
 		curHealth = fullHealth;
 		ani = GetComponent<Animation> ();
-		bloodFillImage = GameObject.FindGameObjectWithTag ("BloodFillImage").GetComponent<Image>();
-		gameOverText = GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>();
-		getHurtImage = GameObject.FindGameObjectWithTag ("GetHurtImage").GetComponent<Image>();
-	}
+
+        canvasEnd = GameObject.FindGameObjectWithTag("CanvasEnd");
+        canvasEnd.SetActive(false);
+        //bloodFillImage = GameObject.FindGameObjectWithTag ("BloodFillImage").GetComponent<Image>();
+        //gameOverText = GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>();
+        //getHurtImage = GameObject.FindGameObjectWithTag ("GetHurtImage").GetComponent<Image>();
+    }
 
 	void Start(){
-		gameOverText.gameObject.SetActive (false);
+		//gameOverText.gameObject.SetActive (false);
 	}
 
 
 	public void MyPlayerGetHurt(float damage){
 
 		curHealth -= damage;
+        Debug.LogError("heal  " + curHealth);
 		StopAllCoroutines ();
 		StartCoroutine (BloodRed());
-		bloodFillImage.fillAmount = curHealth / fullHealth;
+		//bloodFillImage.fillAmount = curHealth / fullHealth;
 		if (curHealth<=0) {
 			Death ();
 		}
@@ -39,9 +44,9 @@ public class PlayerHealth : MonoBehaviour {
 	IEnumerator BloodRed(){
 		
 		for (float i = 1; i >= 0; i-=0.1f) {
-			getHurtImage.color = new Color (1,0,0,i);
+			//getHurtImage.color = new Color (1,0,0,i);
 			if (i<=0.11f) {
-				getHurtImage.color = new Color (1,0,0,0);
+				//getHurtImage.color = new Color (1,0,0,0);
 				break;
 			}
 			yield return new WaitForSeconds (0.02f);
@@ -54,12 +59,24 @@ public class PlayerHealth : MonoBehaviour {
 	void Death(){
 		EventController.Instance.isPlayerLose = true;
 		StopAllCoroutines ();
-		getHurtImage.enabled = false;
-		gameOverText.gameObject.SetActive (true);
-		ani.clip = GetComponent<PlayerController> ().deathClip;
-		ani.Play ();
-		gameObject.SetActive (false);
-	}
+		//getHurtImage.enabled = false;
+		//gameOverText.gameObject.SetActive (true);
+		//ani.clip = GetComponent<SurviveModelController> ().deathClip;
+		//ani.Play ();
+
+		
+
+        canvasEnd.SetActive(true);
+
+        canvasEnd.transform.position = Camera.main.transform.position + Camera.main.transform.forward * 2;
+
+        var grade_text = "You got " + GetComponent<SurviveModelController>().scoreNum + " points\n" + "      try again?";
+        canvasEnd.transform.Find("Text").GetComponent<Text>().text = grade_text;
+
+
+        gameObject.SetActive(false);
+        //Canvas_sym = true;
+    }
 
 
 

@@ -3,18 +3,32 @@ using System.Collections;
 
 public class ProjectileScript : MonoBehaviour {
 
-    public GameObject impactParticle;
-    public GameObject projectileParticle;
+    public GameObject impactParticle = null;
+    public GameObject projectileParticle  = null;
     public GameObject[] trailParticles;
     [HideInInspector]
     public Vector3 impactNormal; //Used to rotate impactparticle.
-
-	// Use this for initialization
-	void Start () {
+    Transform playerTrans;
+    float disappear = 10f;
+    // Use this for initialization
+    void Start () {
         projectileParticle = Instantiate(projectileParticle, transform.position, transform.rotation) as GameObject;
         projectileParticle.transform.parent = transform;
-	}
-	
+        playerTrans = GameObject.FindGameObjectWithTag(Strings.Player).transform;
+    }
+	void Update()
+    {
+        //Debug.LogError("DIS" + Vector3.Distance(transform.position, playerTrans.position));
+        if(Vector3.Distance(transform.position, playerTrans.position) > disappear)
+        {
+            if(projectileParticle!=null)
+                Destroy(projectileParticle, 3f);
+            if (impactParticle != null)
+                DestroyImmediate(impactParticle, true);
+            if (gameObject != null)
+                Destroy(gameObject);
+        }
+    }
 	// Update is called once per frame
 	void OnCollisionEnter (Collision hit) {
 		if (hit.transform.tag==Strings.Player) {
@@ -27,7 +41,10 @@ public class ProjectileScript : MonoBehaviour {
 
 		}
         //transform.DetachChildren();
-        impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal)) as GameObject;
+        if(impactParticle != null)
+        {
+            impactParticle = Instantiate(impactParticle, transform.position, Quaternion.FromToRotation(Vector3.up, impactNormal)) as GameObject;
+        }
         //Debug.DrawRay(hit.contacts[0].point, hit.contacts[0].normal * 1, Color.yellow);
 
         if (hit.gameObject.tag == "Destructible") // Projectile will destroy objects tagged as Destructible

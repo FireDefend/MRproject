@@ -75,8 +75,14 @@ public class PlayerController : MonoBehaviour {
 			weaponAni.Play ();
 		}
 
-		Ray ray= Camera.main.ScreenPointToRay (Input.mousePosition);
-		RaycastHit hitInfo;
+
+        var headPosition = Camera.main.transform.position;
+        var gazeDirection = Camera.main.transform.forward;
+
+
+        //Ray ray= Camera.main.ScreenPointToRay (Input.mousePosition);
+        var ray = new Ray(headPosition, gazeDirection);
+        RaycastHit hitInfo;
 		if (Physics.Raycast (ray, out hitInfo,120,layerMask)) {
 
             Vector3 lookPos = hitInfo.point - transform.position;

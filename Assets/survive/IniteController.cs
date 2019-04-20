@@ -8,7 +8,11 @@ public class IniteController : MonoBehaviour {
 	public GameObject enemy1;
 	public GameObject enemy2;
 	public GameObject enemy3;
-	Transform pos1;
+
+    [HideInInspector]
+    public int curEnemyNum = 0;
+    int totalEnemyNum = 5;
+    Transform pos1;
 	Transform pos2;
 	Transform pos3;
 	void Awake(){
@@ -18,26 +22,38 @@ public class IniteController : MonoBehaviour {
 
 	}
     void Start() {
-        //InvokeRepeating("Inite1", 2, 5);
-        //InvokeRepeating("Inite2", 3, 8);
-        //InvokeRepeating("Inite3", 5, 12);
-        Inite1();
-        Inite2();
-        Inite3();
+        InvokeRepeating("Inite1", 2, 10);
+        InvokeRepeating("Inite2", 3, 15);
+        InvokeRepeating("Inite3", 5, 20);
     }
+    
 
 
 	void Inite1(){
-		Instantiate (enemy1,pos1.position,Quaternion.identity);
+        if(curEnemyNum < totalEnemyNum)
+        {
+            Instantiate(enemy1, pos1.position, Quaternion.identity);
+            curEnemyNum++;
+        }
+		
 
 	}
 
 	void Inite2(){
-		Instantiate (enemy2,pos2.position,Quaternion.identity);
+        if (curEnemyNum < totalEnemyNum)
+        {
+            Instantiate(enemy2, pos2.position, Quaternion.identity);
+            curEnemyNum++;
+        }
 	}
 
 	void Inite3(){
-		Instantiate (enemy3,pos3.position,Quaternion.identity);
+        if (curEnemyNum < totalEnemyNum)
+        {
+            Instantiate(enemy3, pos3.position, Quaternion.identity);
+            curEnemyNum++;
+        }
+        
 	}
 
 }

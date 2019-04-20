@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
 	private Dictionary<string, int> gameButtonToNum = new Dictionary<string, int>()
 	{
 		{ "jump", 0},
-		{ "shoot", 1}
+		{ "survive", 1}
 
 	};
 
