@@ -73,7 +73,7 @@ public class load2 : MonoBehaviour
         if (loadscene_sym == true && oneload_sym == true)
         {
             oneload_sym = false;
-            SceneManager.LoadSceneAsync("shoot", LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync("survive", LoadSceneMode.Additive);
 
 
         }
