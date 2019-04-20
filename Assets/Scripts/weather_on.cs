@@ -12,11 +12,12 @@ public class weather_on : MonoBehaviour {
 	public static string weather;
 	public static string city;
 	public static string icon;
+    private string date;
+    private string ftemp;
 	void Start()
 	{
-		        this.transform.gameObject.SetActive(false);
-//		StartCoroutine(ww());
-//		this.transform.gameObject.SetActive(true);
+		       // this.transform.gameObject.SetActive(false);
+		StartCoroutine(ww());
 
 	}
 	// Use this for initialization
@@ -54,13 +55,18 @@ public class weather_on : MonoBehaviour {
 			weather = json["response"][0]["periods"][0]["weather"].ToString();
 			city = json ["response"] [0] ["profile"] ["tz"].ToString().Split('/')[1];
 			icon = json["response"][0]["periods"][0]["icon"].ToString().Split('.')[0];
-			//			Debug.LogError (city + temp_min + temp_max + weather + icon);
-			foreach (Transform child in this.transform)
+            ftemp = json["response"][0]["periods"][0]["minTempF"].ToString() + "℉ ~ " + json["response"][0]["periods"][0]["maxTempF"].ToString() + "℉  ";
+            date = json["response"][0]["periods"][0]["validTime"].ToString().Substring(0,10);
+            this.transform.Find("Date").GetComponent<Text>().text = date;
+            this.transform.Find("Ftemp").GetComponent<Text>().text = ftemp;
+            //			Debug.LogError (city + temp_min + temp_max + weather + icon);
+            foreach (Transform child in this.transform)
 			{
 				string text_name = child.gameObject.name;
 				if (text_name == "city_text") {
-					child.gameObject.GetComponent<Text> ().text = "<color=white>" + weather_on.city + "</color>";
-				} else if (text_name == "weather_text") {
+                    //child.gameObject.GetComponent<Text> ().text = "<color=white>" + weather_on.city + "</color>";
+                    child.gameObject.GetComponent<Text>().text = weather_on.city ;
+                } else if (text_name == "weather_text") {
 					child.gameObject.GetComponent<Text> ().text = weather_on.weather;
 				} else if (text_name == "temperature_text") {
 					child.gameObject.GetComponent<Text> ().text = weather_on.temp_min + " ~ " + weather_on.temp_max;

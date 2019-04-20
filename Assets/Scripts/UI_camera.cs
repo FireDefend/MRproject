@@ -14,7 +14,7 @@ public class UI_camera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         count++;
-        if (count == 60)
+        if (count == 30)
         {
             count = 0;
             this.transform.rotation = Quaternion.LookRotation(Camera.main.transform.forward);
