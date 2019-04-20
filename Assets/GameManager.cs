@@ -276,6 +276,10 @@ public class GameManager : MonoBehaviour
                 {
                     SceneManager.LoadSceneAsync("loading", LoadSceneMode.Additive);
                 }
+				else if (selectedButton.name == "shoot")
+				{
+					SceneManager.LoadSceneAsync("loading2", LoadSceneMode.Additive);
+				}
 
             }
 

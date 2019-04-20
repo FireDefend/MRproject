@@ -21,7 +21,7 @@ public class weather_on : MonoBehaviour {
 
 	}
 	// Use this for initialization
-	/*void Update()
+	void Update()
 	{
 		if (GameManager.selectedButton&&GameManager.selectedButton.name == "weather")
 		{
@@ -30,7 +30,7 @@ public class weather_on : MonoBehaviour {
 			GameManager.selectedButton = null;
 		}
 
-	}*/
+	}
 	IEnumerator ww()
 	{
 		WWW web = new WWW(url);
