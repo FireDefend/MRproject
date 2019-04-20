@@ -21,16 +21,16 @@ public class weather_on : MonoBehaviour {
 
 	}
 	// Use this for initialization
-	void Update()
-	{
-		if (GameManager.selectedButton&&GameManager.selectedButton.name == "weather")
-		{
-			StartCoroutine(ww());
-			this.transform.gameObject.SetActive(true);
-			GameManager.selectedButton = null;
-		}
-
-	}
+//	void Update()
+//	{
+//		if (GameManager.selectedButton&&GameManager.selectedButton.name == "weather")
+//		{
+//			StartCoroutine(ww());
+//			this.transform.gameObject.SetActive(true);
+//			GameManager.selectedButton = null;
+//		}
+//
+//	}
 	IEnumerator ww()
 	{
 		WWW web = new WWW(url);
@@ -74,7 +74,6 @@ public class weather_on : MonoBehaviour {
 					child.gameObject.GetComponent<Image>().sprite = Resources.Load<Sprite>("WeatherIcon/" + weather_on.icon);
 				}
 			}
-
 
 		}
 
