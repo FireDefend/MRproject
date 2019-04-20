@@ -60,3 +60,6 @@ sysinfo.txt
 *.apk
 *.unitypackage
 
+Assets/Weather_Component.meta
+Assets/Resources/WeatherIcon.meta
+Assets/Weather_Component/weather_screen.prefab.meta
