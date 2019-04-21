@@ -17,20 +17,12 @@ public class weather_on : MonoBehaviour {
 	void Start()
 	{
 		       // this.transform.gameObject.SetActive(false);
-		StartCoroutine(ww());
-
 	}
-	// Use this for initialization
-//	void Update()
-//	{
-//		if (GameManager.selectedButton&&GameManager.selectedButton.name == "weather")
-//		{
-//			StartCoroutine(ww());
-//			this.transform.gameObject.SetActive(true);
-//			GameManager.selectedButton = null;
-//		}
-//
-//	}
+
+	void OnEnable(){
+		StartCoroutine(ww());
+	
+	}
 	IEnumerator ww()
 	{
 		WWW web = new WWW(url);
@@ -59,7 +51,8 @@ public class weather_on : MonoBehaviour {
             date = json["response"][0]["periods"][0]["validTime"].ToString().Substring(0,10);
             this.transform.Find("Date").GetComponent<Text>().text = date;
             this.transform.Find("Ftemp").GetComponent<Text>().text = ftemp;
-            //			Debug.LogError (city + temp_min + temp_max + weather + icon);
+            //			Debug.LogError (city + temp_min + temp_max + weather + icon);g
+			Debug.LogError(weather + ftemp);
             foreach (Transform child in this.transform)
 			{
 				string text_name = child.gameObject.name;
