@@ -12,11 +12,14 @@ public class PlayerHealth : MonoBehaviour {
 	Text gameOverText;
 	Image getHurtImage;
     GameObject canvasEnd;
-	void Awake(){
+
+    SurviveModelController modelController;
+    void Awake(){
 		curHealth = fullHealth;
 		ani = GetComponent<Animation> ();
 
         canvasEnd = GameObject.FindGameObjectWithTag("CanvasEnd");
+        modelController = GetComponent<SurviveModelController>();
         canvasEnd.SetActive(false);
         //bloodFillImage = GameObject.FindGameObjectWithTag ("BloodFillImage").GetComponent<Image>();
         //gameOverText = GameObject.FindGameObjectWithTag ("GameOverText").GetComponent<Text>();
@@ -35,7 +38,7 @@ public class PlayerHealth : MonoBehaviour {
 		StopAllCoroutines ();
 		StartCoroutine (BloodRed());
 		//bloodFillImage.fillAmount = curHealth / fullHealth;
-		if (curHealth<=0) {
+		if (curHealth<=0 || modelController.scoreNum > 200 || transform.position.y < -2) {
 			Death ();
 		}
 
