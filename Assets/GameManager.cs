@@ -200,6 +200,7 @@ public class GameManager : MonoBehaviour
 				{
 					game.SetActive(!gameButtonIfHidden);
 				}
+
 				if (weather_screen != null) {
 					weather_screen.SetActive (false);
 				}
@@ -223,6 +224,12 @@ public class GameManager : MonoBehaviour
 				{
 					button.SetActive(!danceButtonIfHidden);
 				}
+				gameButtonIfHidden = true;
+				foreach (GameObject game in gameButtons)
+				{
+					game.SetActive(!gameButtonIfHidden);
+				}
+
 
 			}
 			if (selectedButton.name.Equals("weather"))
@@ -236,7 +243,16 @@ public class GameManager : MonoBehaviour
 				{
 					button.SetActive(!menuButtonIfHidden);
 				}
-
+				danceButtonIfHidden = true;
+				foreach (GameObject button in danceButtons)
+				{
+					button.SetActive(!danceButtonIfHidden);
+				}
+				gameButtonIfHidden = true;
+				foreach (GameObject game in gameButtons)
+				{
+					game.SetActive(!gameButtonIfHidden);
+				}
 
 			}
 
@@ -262,6 +278,12 @@ public class GameManager : MonoBehaviour
 				{
 					button.SetActive(!menuButtonIfHidden);
 				}
+				gameButtonIfHidden = true;
+				foreach (GameObject game in gameButtons)
+				{
+					game.SetActive(!gameButtonIfHidden);
+				}
+
 
 			}
 			if (gameButtonToNum.ContainsKey(selectedButton.name))
@@ -271,6 +293,17 @@ public class GameManager : MonoBehaviour
 				{
 					button.SetActive(!menuButtonIfHidden);
 				}
+				danceButtonIfHidden = true;
+				foreach (GameObject button in danceButtons)
+				{
+					button.SetActive(!danceButtonIfHidden);
+				}
+				gameButtonIfHidden = true;
+				foreach (GameObject game in gameButtons)
+				{
+					game.SetActive(!gameButtonIfHidden);
+				}
+
                 //pending...
 //				Debug.LogError("game "  +selectedButton.name );
                 if (selectedButton.name == "jump")
