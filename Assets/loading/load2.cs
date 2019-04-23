@@ -18,7 +18,13 @@ public class load2 : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.UnloadSceneAsync("main");
+		if (SceneManager.GetActiveScene () == "main") {
+			SceneManager.UnloadSceneAsync("main");
+		}
+		else if (SceneManager.GetActiveScene () == "survive") {
+			SceneManager.UnloadSceneAsync("survive");
+		}
+
         loadscene_sym = false;
         oneload_sym = true;
         currentProgress = 0;
