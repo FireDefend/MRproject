@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Academy.HoloToolkit.Unity;
+using UnityEngine.SceneManagement;
 public class SurviveModelController : MonoBehaviour {
 
 
@@ -39,7 +40,9 @@ public class SurviveModelController : MonoBehaviour {
         //shootClip = ani.GetClip("a2o_pathObstacles_clearWithMachete_all loop1_vmd");
         //runClip = ani.GetClip("walk1010_vmd");
         //idleClip = ani.GetClip("idle_face_vmd");
+
         layerMask = LayerMask.GetMask("Ground");
+        SceneManager.UnloadSceneAsync("loading2");
     }
 
     void FixedUpdate()
