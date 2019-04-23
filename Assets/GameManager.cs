@@ -272,11 +272,12 @@ public class GameManager : MonoBehaviour
 					button.SetActive(!menuButtonIfHidden);
 				}
                 //pending...
+//				Debug.LogError("game "  +selectedButton.name );
                 if (selectedButton.name == "jump")
                 {
                     SceneManager.LoadSceneAsync("loading", LoadSceneMode.Additive);
                 }
-				else if (selectedButton.name == "shoot")
+				else if (selectedButton.name == "survive")
 				{
 					SceneManager.LoadSceneAsync("loading2", LoadSceneMode.Additive);
 				}
