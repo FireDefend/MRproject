@@ -17,6 +17,7 @@ public class SpeechManager : MonoBehaviour
         speech_sym = false;
         stop_sym = false;
         dance_sym = false;
+        keywords.Clear();
         keywords.Add("weather", () =>
         {
             // Call the OnReset method on every descendant object.
@@ -58,7 +59,7 @@ public class SpeechManager : MonoBehaviour
         keywords.Add("go there", () =>
         {
             GameManager.weather_screen.SetActive(false);
-            GameManager.hitpoint=GameManager.rayhitpoint;
+            GameManager.hitpoint = GameManager.rayhitpoint;
             GameManager.selectedButton = selecttemp;
         });
 
@@ -77,5 +78,10 @@ public class SpeechManager : MonoBehaviour
         {
             keywordAction.Invoke();
         }
+    }
+    void OnDestroy()
+    {
+        keywordRecognizer.Stop();
+        keywordRecognizer.OnPhraseRecognized -= KeywordRecognizer_OnPhraseRecognized;
     }
 }

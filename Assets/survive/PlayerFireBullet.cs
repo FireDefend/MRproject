@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.WSA.Input;
+using UnityEngine.SceneManagement;
 
 
-namespace Academy.HoloToolkit.Unity
-{
-    public class PlayerFireBullet : Singleton<HandsManager>
+    public class PlayerFireBullet : MonoBehaviour
     {
 
 
@@ -31,25 +30,14 @@ namespace Academy.HoloToolkit.Unity
             secondBullet = Resources.Load<GameObject>("PlayerBullet/SecondBullet");
             thirdBullet = Resources.Load<GameObject>("PlayerBullet/ThirdBullet");
             firePos = transform.GetChild(3).transform;
-            InteractionManager.InteractionSourceDetected += InteractionManager_InteractionSourceDetected;
-            InteractionManager.InteractionSourceLost += InteractionManager_InteractionSourceLost;
-            InteractionManager.InteractionSourcePressed += InteractionManager_InteractionSourcePressed;
-            InteractionManager.InteractionSourceReleased += InteractionManager_InteractionSourceReleased;
+
 
         }
-        private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
+ 
+
+       
+        public void fire()
         {
-
-        }
-
-        private void InteractionManager_InteractionSourceDetected(InteractionSourceDetectedEventArgs obj)
-        {
-
-        }
-
-        private void InteractionManager_InteractionSourceReleased(InteractionSourceReleasedEventArgs obj)
-        {
-            Debug.Log("release");
             isFiring = true;
             switch (thisWeaponIndex)
             {
@@ -64,15 +52,7 @@ namespace Academy.HoloToolkit.Unity
                     break;
 
             }
-            StartCoroutine(firingAni());
-
         }
-
-        private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
-        {
-
-        }
-
         void Update()
         {
             if (Input.GetMouseButtonDown(0))
@@ -91,14 +71,8 @@ namespace Academy.HoloToolkit.Unity
                         break;
 
                 }
-                StartCoroutine(firingAni());
             }
 
-        }
-        IEnumerator firingAni()
-        {
-            yield return new WaitForSeconds(1);
-            isFiring = false;
         }
 
 
@@ -129,4 +103,4 @@ namespace Academy.HoloToolkit.Unity
 
 
     }
-}
+
