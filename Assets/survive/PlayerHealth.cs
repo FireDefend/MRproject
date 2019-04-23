@@ -28,17 +28,24 @@ public class PlayerHealth : MonoBehaviour {
 
 	void Start(){
 		//gameOverText.gameObject.SetActive (false);
+
 	}
 
-
-	public void MyPlayerGetHurt(float damage){
+    void Update()
+    {
+        if (curHealth <= 0 || modelController.scoreNum > 200 || transform.position.y < -2)
+        {
+            Death();
+        }
+    }
+    public void MyPlayerGetHurt(float damage){
 
 		curHealth -= damage;
         Debug.LogError("heal  " + curHealth);
 		StopAllCoroutines ();
 		StartCoroutine (BloodRed());
 		//bloodFillImage.fillAmount = curHealth / fullHealth;
-		if (curHealth<=0 || modelController.scoreNum > 200 || transform.position.y < -2) {
+		if (curHealth<=0 ) {
 			Death ();
 		}
 
