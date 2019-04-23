@@ -8,7 +8,8 @@ public class PlayerHealth : MonoBehaviour {
 
 
 	public float fullHealth=100;
-	float curHealth;
+    [HideInInspector]
+	public float curHealth;
 	Animation ani;
 	Image bloodFillImage;
 	Text gameOverText;
