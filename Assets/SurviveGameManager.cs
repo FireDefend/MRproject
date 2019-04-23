@@ -6,12 +6,25 @@ using UnityEngine.SceneManagement;
 
 namespace Academy.HoloToolkit.Unity
 {
-    public class SurviveGameManager : MonoBehaviour
+    public class SurviveGameManager : Singleton<HandsManager>
     {
-
-        // Use this for initialization
-        void Start()
+        GameObject player;
+        public bool HandDetected
         {
+            get;
+            private set;
+        }
+        // Use this for initialization
+        void Awake()
+        {
+            player = GameObject.FindGameObjectWithTag(Strings.Player);
+
+            InteractionManager.InteractionSourceReleased += InteractionManager_InteractionSourceReleased;
+            InteractionManager.InteractionSourceDetected += InteractionManager_InteractionSourceDetected;
+            InteractionManager.InteractionSourceLost += InteractionManager_InteractionSourceLost;
+            InteractionManager.InteractionSourcePressed += InteractionManager_InteractionSourcePressed;
+
+            
 
         }
 
@@ -20,7 +33,18 @@ namespace Academy.HoloToolkit.Unity
         {
 
         }
-        private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
+        private void InteractionManager_InteractionSourceLost(InteractionSourceLostEventArgs obj)
+        {
+
+        }
+
+        private void InteractionManager_InteractionSourceDetected(InteractionSourceDetectedEventArgs obj)
+        {
+
+        }
+
+
+        private void InteractionManager_InteractionSourceReleased(InteractionSourceReleasedEventArgs obj)
         {
 
             Debug.Log("press survive game manager");
@@ -32,15 +56,32 @@ namespace Academy.HoloToolkit.Unity
                 {
                     if (hit.collider.gameObject.name == "Yes_button")
                     {
-                        SceneManager.LoadSceneAsync("loading2", LoadSceneMode.Single);
+                        SceneManager.LoadSceneAsync("loading2", LoadSceneMode.Additive);
 
                     }
                     else if (hit.collider.gameObject.name == "No_button")
                     {
-                        SceneManager.LoadSceneAsync("main", LoadSceneMode.Single);
+                        SceneManager.LoadScene("main");
+
 
                     }
                 }
+            if(player.active == true)
+            {
+                player.GetComponent<PlayerFireBullet>().fire();
+            }
+        }
+        private void InteractionManager_InteractionSourcePressed(InteractionSourcePressedEventArgs obj)
+        {
+
+        }
+
+        void OnDestroy()
+        {
+            InteractionManager.InteractionSourceDetected -= InteractionManager_InteractionSourceDetected;
+            InteractionManager.InteractionSourceLost -= InteractionManager_InteractionSourceLost;
+            InteractionManager.InteractionSourcePressed -= InteractionManager_InteractionSourcePressed;
+            InteractionManager.InteractionSourceReleased -= InteractionManager_InteractionSourceReleased;
         }
     }
 }

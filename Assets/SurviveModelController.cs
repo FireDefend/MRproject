@@ -51,7 +51,7 @@ public class SurviveModelController : MonoBehaviour {
             Rotate();
         if(scoreText != null)
         {
-            scoreText.GetComponent<TextMesh>().text = "score: " + scoreNum;
+            scoreText.GetComponent<TextMesh>().text = "Score: " + scoreNum +"\nHealth: "+ GetComponent<PlayerHealth>().curHealth;
         }
         
     }
