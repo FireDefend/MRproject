@@ -1,0 +1,211 @@
+fileFormatVersion: 2
+guid: 94d07d51729ae864bbd35d17712c0141
+ModelImporter:
+  serializedVersion: 22
+  fileIDToRecycleName:
+    100000: 0.joint_All M14
+    100002: 1.!joint_Muzzle
+    100004: 10.!joint_Bipod L Traget
+    100006: 11.IK_Bipod L IK
+    100008: 12.joint_Bipod L Spring
+    100010: 13.joint_Bipod R
+    100012: 14.!joint_Bipod R Link
+    100014: 15.!joint_Bipod R Traget
+    100016: 16.IK_Bipod R IK
+    100018: 17.joint_Bipod R Spring
+    100020: 18.!Root
+    100022: 2.joint_Charg Handle
+    100024: 3.joint_Bolt
+    100026: 4.joint_Magazine
+    100028: 5.joint_Suppressor
+    100030: 6.joint_Safety
+    100032: 7.joint_All Bipod
+    100034: 8.joint_Bipod L
+    100036: 9.!joint_Bipod L Link
+    100038: //RootNode
+    100040: U_Char
+    100042: U_Char_0
+    100044: U_Char_1
+    400000: 0.joint_All M14
+    400002: 1.!joint_Muzzle
+    400004: 10.!joint_Bipod L Traget
+    400006: 11.IK_Bipod L IK
+    400008: 12.joint_Bipod L Spring
+    400010: 13.joint_Bipod R
+    400012: 14.!joint_Bipod R Link
+    400014: 15.!joint_Bipod R Traget
+    400016: 16.IK_Bipod R IK
+    400018: 17.joint_Bipod R Spring
+    400020: 18.!Root
+    400022: 2.joint_Charg Handle
+    400024: 3.joint_Bolt
+    400026: 4.joint_Magazine
+    400028: 5.joint_Suppressor
+    400030: 6.joint_Safety
+    400032: 7.joint_All Bipod
+    400034: 8.joint_Bipod L
+    400036: 9.!joint_Bipod L Link
+    400038: //RootNode
+    400040: U_Char
+    400042: U_Char_0
+    400044: U_Char_1
+    4300000: U_Char_0
+    4300002: U_Char_1
+    9500000: //RootNode
+    13700000: U_Char_0
+    13700002: U_Char_1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 0.M14_Parts_A
+    second: {fileID: 2100000, guid: 0ebbda3404b36eb42a8144cee35d7800, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 1.M14_Barrel
+    second: {fileID: 2100000, guid: 501025546eb6dfb448a5233e09f26903, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 10.Scope_A
+    second: {fileID: 2100000, guid: f8c8a3af4a365cb4c9deeb85143357b6, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 11.Scope_Mount
+    second: {fileID: 2100000, guid: a4c7fcd76020d2e42b51ee35f2a42c15, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 12.Scope_Lens
+    second: {fileID: 2100000, guid: b8ba0c5afaa1e88439b2ac6ed78f37bd, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 13.Bipod
+    second: {fileID: 2100000, guid: f25784b0926a23e47aebba32dc9d8022, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 14.shinkizaishitsu1
+    second: {fileID: 2100000, guid: c1d9c832de25e644e89456a54285fb2d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 2.M14_Reciever
+    second: {fileID: 2100000, guid: 5602b2654992836429323d41fa82886d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 3.M14_Chassis_EBR
+    second: {fileID: 2100000, guid: 8576909dfca64a041a3c0167414583ac, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 4.M14_Stock_Polymer
+    second: {fileID: 2100000, guid: 72a22e9820c1cdf42b187288494b07fe, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 5.M14_Magazine
+    second: {fileID: 2100000, guid: 4a5f76b2ec047d3449cac7f65f95b6f2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 6.MAG_Belt
+    second: {fileID: 2100000, guid: 637ebbeeb3f530b4a8c5af323a65e902, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 7.M14_Stock_Wood_A
+    second: {fileID: 2100000, guid: 793c8020582e9b14f9513fa170f2da9b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 8.Suppressor
+    second: {fileID: 2100000, guid: 18723f2f3b35ff543b4ad13599156b8f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: 9.Scope_Rings
+    second: {fileID: 2100000, guid: 1807a7ad2e6fb5a4bb3a5cbc62565f25, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 0
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

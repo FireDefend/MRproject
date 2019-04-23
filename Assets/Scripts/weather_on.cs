@@ -26,8 +26,10 @@ public class weather_on : MonoBehaviour {
 	IEnumerator ww()
 	{
 		WWW web = new WWW(url);
+        Debug.LogError("web start");
 		yield return web;
-		if (web.text != null)
+        Debug.LogError("web end");
+        if (web.text != null)
 		{
 			JsonData json = JsonMapper.ToObject(web.text);
 			//			weather_text = "City:           " + json["response"][0]["profile"]["tz"].ToString() + "\n" +

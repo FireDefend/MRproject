@@ -14,3 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/loading.unity
     guid: 558e65488ac54994f8fccc4352841156
+  - enabled: 1
+    path: Assets/loading2.unity
+    guid: b973aa22f8a734fd883342691db31b40
+  - enabled: 1
+    path: Assets/survive.unity
+    guid: 79a0c4564cc36ca47a03226da7391fca
